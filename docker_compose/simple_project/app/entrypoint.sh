@@ -1,16 +1,12 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
-then
-    echo "Waiting for postgres..."
+echo "Waiting for postgres..."
 
-    while ! nc -z $DB_HOST $DB_PORT; do
-      sleep 0.1
-    done
+while ! nc -z $DB_HOST $DB_PORT; do
+  sleep 0.1
+done
 
-    echo "PostgreSQL started"
-fi
-
+echo "PostgreSQL started"
 
 echo "python manage.py migrate"
 python manage.py migrate & wait
@@ -21,17 +17,24 @@ if [ "$DJANGO_SUPERUSER_USERNAME" ]
 then
     echo "python manage.py createsuperuser --noinput || true"
     python manage.py createsuperuser --noinput || true & wait
-    
+
 fi
 
 echo "python manage.py collectstatic --noinput || true"
 python manage.py collectstatic --noinput || true & wait
 
-cd sqlite_to_postgres 
+cd sqlite_to_postgres
 
 echo "python load_data.py"
-python load_data.py & wait
+python load_data.py -e $psql_DB_NAME=movies_db $psql_DB_USER=app $psql_DB_PASSWORD=Njhufi33 $psql_DB_HOST=psql $psql_DB_PORT=5432
+
+# sqlite
+sqlite_DB_NAME=db.sqlite& wait
 
 cd ../
 echo "uwsgi --strict --ini uwsgi.ini"
 uwsgi --strict --ini uwsgi.ini
+
+
+
+
