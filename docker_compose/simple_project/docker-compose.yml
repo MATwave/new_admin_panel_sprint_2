@@ -33,10 +33,22 @@ services:
       - ./data:/data/:ro
       - static_volume:/opt/app/static
       - media_volume:/opt/app/media
+    ports:
+      - "80:80"
     depends_on:
       - service
+
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    volumes:
+      - ./openapi.yaml:/swagger.yaml
+    env_file:
+      - ./.env
     ports:
-      - "80:80" 
+      - "8080:8080"
+    depends_on:
+      - nginx
 
 volumes:
   static_volume:

@@ -8,5 +8,7 @@ INSTALLED_APPS = [
 
     'movies.apps.MoviesConfig',
     "debug_toolbar",
-    "django_extensions"
+    "django_extensions",
+    "corsheaders", # для Try it out swagger'а
+    "django.middleware.common.CommonMiddleware",
 ]
