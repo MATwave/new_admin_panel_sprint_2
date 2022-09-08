@@ -9,6 +9,10 @@ INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
     "debug_toolbar",
     "django_extensions",
-    "corsheaders", # для Try it out swagger'а
-    "django.middleware.common.CommonMiddleware",
+# для Try it out swagger'а
+    "corsheaders",
 ]
+
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8080",]
+
+

@@ -39,16 +39,18 @@ services:
       - service
 
 
-  swagger:
-    image: swaggerapi/swagger-ui
-    volumes:
-      - ./openapi.yaml:/swagger.yaml
-    env_file:
-      - ./.env
-    ports:
-      - "8080:8080"
-    depends_on:
-      - nginx
+#  swagger:
+#    image: swaggerapi/swagger-ui
+#    volumes:
+#      - ./openapi.yaml:/swagger.yaml
+#    env_file:
+#      - ./.env
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - nginx\
+#docker run -p 8080:8080 --name swagger -v ./openapi.yaml:/swagger.yaml -e SWAGGER_JSON=/swagger.yaml swaggerapi/swagger-ui
+
 
 volumes:
   static_volume:
