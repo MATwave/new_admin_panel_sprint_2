@@ -15,7 +15,7 @@ services:
 
   psql:
     # Образ и версия базы, которую мы будем использовать
-    image: postgres:13
+    image: postgres:alpine
     # Внешний том(volume) и место где он будет подключен внутри контейнера
     volumes:
       - ./psql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
