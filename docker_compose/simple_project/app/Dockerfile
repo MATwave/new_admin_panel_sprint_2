@@ -24,5 +24,3 @@ RUN apt-get update && apt-get install -y netcat
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ./entrypoint.sh
-
-#ENTRYPOINT ["uwsgi", "--strict", "--ini", "uwsgi.ini"]
