@@ -6,6 +6,7 @@ from django.views.generic.detail import BaseDetailView
 from movies.models import Filmwork
 from movies.models.person_film_work import PersonFilmwork, Roles
 
+
 class MoviesApiMixin:
     model = Filmwork
     http_method_names = ['get']  # Список методов, которые реализует обработчик
@@ -18,7 +19,7 @@ class MoviesApiMixin:
 
     def get_queryset(self):
         queryset = Filmwork.objects.prefetch_related('genres', 'person').values().all(). \
-            annotate(genres=ArrayAgg('genres__name',distinct=True),
+            annotate(genres=ArrayAgg('genres__name', distinct=True),
                      actors=MoviesApiMixin._aggregate_person(role=Roles.ACTOR),
                      directors=MoviesApiMixin._aggregate_person(role=Roles.DIRECTOR),
                      writers=MoviesApiMixin._aggregate_person(role=Roles.WRITER),
@@ -29,8 +30,8 @@ class MoviesApiMixin:
     def render_to_response(self, context, **response_kwargs):
         return JsonResponse(context)
 
-class MoviesListApi(MoviesApiMixin,BaseListView):
 
+class MoviesListApi(MoviesApiMixin, BaseListView):
     paginate_by = 50
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -45,9 +46,8 @@ class MoviesListApi(MoviesApiMixin,BaseListView):
         }
         return context
 
+
 class MoviesDetailApi(MoviesApiMixin, BaseDetailView):
 
     def get_context_data(self, **kwargs):
         return kwargs['object']
-
-
