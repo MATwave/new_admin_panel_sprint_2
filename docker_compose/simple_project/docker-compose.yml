@@ -3,6 +3,7 @@ services:
 
   service:
     build: app
+    command: uwsgi --strict --ini uwsgi.ini
     expose:
       - "8000"
     volumes:
